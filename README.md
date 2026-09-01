@@ -96,7 +96,7 @@ MockAI is a full-stack Generative AI application designed to help job seekers an
      ```env
      MONGODB_URI=mongodb://localhost:27017
      DATABASE_NAME=interview_prep
-     SECRET_KEY=4eb806e23214da3108c909623e1f5cd9a77ef797bd3e57620eb583d735cd12fb
+     SECRET_KEY=your_secret_key_here
      ALGORITHM=HS256
      ACCESS_TOKEN_EXPIRE_MINUTES=1440
      GEMINI_API_KEY=YOUR_GEMINI_API_KEY
