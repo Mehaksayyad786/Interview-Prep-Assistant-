@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MockAI - AI Interview Prep Assistant Presentation</title>
+  <!-- Tailwind CSS Play CDN for beautiful typography & utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#0f172a',     /* Slate 900 */
+            brandCard: '#1e293b',     /* Slate 800 */
+            brandBorder: '#334155',   /* Slate 700 */
+            brandIndigo: '#6366f1',   /* Indigo 500 */
+            brandTeal: '#14b8a6',     /* Teal 500 */
+            brandPurple: '#a855f7',   /* Purple 500 */
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['Fira Code', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      overflow: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    .heading-font {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+    }
+
+    .glow-indigo {
+      box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.35);
+    }
+
+    .glow-teal {
+      box-shadow: 0 0 40px -10px rgba(20, 184, 166, 0.35);
+    }
+
+    /* Slide transitions */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: scale(0.96) translateY(10px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    .slide.prev {
+      opacity: 0;
+      transform: scale(0.96) translateY(-10px);
+    }
+
+    /* Simple custom scrollbar */
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 flex flex-col justify-between h-screen w-screen relative">
+
+  <!-- Background Decorative Gradients -->
+  <div
+    class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brandIndigo/10 rounded-full blur-[120px] pointer-events-none z-0">
+  </div>
+  <div
+    class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brandTeal/10 rounded-full blur-[120px] pointer-events-none z-0">
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header
+    class="w-full flex items-center justify-between px-8 py-4 border-b border-brandBorder/40 bg-brandDark/80 backdrop-blur-md z-50">
+    <div class="flex items-center gap-3">
+      <div
+        class="w-9 h-9 rounded-lg bg-gradient-to-tr from-brandIndigo to-brandTeal flex items-center justify-center shadow-lg font-bold text-white tracking-wider text-lg">
+        M</div>
+      <div>
+        <span
+          class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">MockAI</span>
+        <span class="text-xs block text-brandTeal font-bold tracking-wider">PROJECT PRESENTATION</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-6">
+      <div class="text-sm font-semibold text-slate-400">
+        Active Section: <span id="section-name" class="text-brandIndigo">Introduction</span>
+      </div>
+      <div
+        class="flex items-center gap-1.5 px-3 py-1 bg-brandCard/60 rounded-full border border-brandBorder/40 text-xs font-semibold text-slate-300">
+        <span id="slide-num">1</span> / <span id="slide-total">10</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slide Slides Container -->
+  <main class="flex-grow w-full relative overflow-hidden z-10 px-8 py-6">
+
+    <!-- SLIDE 1: Cover Title -->
+    <section class="slide active flex items-center justify-center" data-section="Introduction">
+      <div
+        class="max-w-5xl w-full glass-card rounded-2xl p-12 glow-indigo border border-brandIndigo/30 relative overflow-hidden flex flex-col md:flex-row gap-8 items-center">
+        <!-- Accent decorative tag -->
+        <div
+          class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-brandIndigo/20 to-transparent rounded-bl-full">
+        </div>
+
+        <div class="flex-grow space-y-6 md:w-2/3">
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1 bg-brandIndigo/10 text-brandIndigo rounded-full border border-brandIndigo/20 text-xs font-extrabold tracking-widest uppercase">
+            ⚡ Full-Stack GenAI Application
+          </div>
+          <h1 class="text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+            MockAI
+          </h1>
+          <p class="text-2xl font-bold bg-gradient-to-r from-brandTeal to-brandIndigo bg-clip-text text-transparent">
+            AI-Powered Interview Preparation Assistant
+          </p>
+          <p class="text-slate-300 leading-relaxed text-lg">
+            Conduct adaptive mock interviews, evaluate responses in real-time with granular scoring metrics, map
+            syllabus weak topics, and outline personalized checkable learning roadmaps.
+          </p>
+          <div class="flex gap-4 pt-2 text-sm text-slate-400 font-medium">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brandTeal animate-pulse"></span>
+              FastAPI + React 19
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brandIndigo"></span>
+              Google Gemini Core
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brandPurple"></span>
+              MongoDB Database
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/3 flex flex-col items-center justify-center">
+          <div
+            class="relative w-48 h-48 bg-gradient-to-tr from-brandIndigo to-brandTeal rounded-2xl flex items-center justify-center shadow-2xl p-1 transform rotate-3 hover:rotate-0 transition-transform duration-300">
+            <div
+              class="bg-brandDark w-full h-full rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+              <span class="text-5xl mb-2">🤖</span>
+              <span class="text-lg font-bold text-white">GenAI Evaluator</span>
+              <span class="text-xs text-brandTeal mt-1">Structured Mode</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: The Problem -->
+    <section class="slide flex items-center justify-center" data-section="Context & Challenges">
+      <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Left: The Challenges Card -->
+        <div class="glass-card rounded-2xl p-8 border border-brandIndigo/30 glow-indigo flex flex-col justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-brandIndigo mb-4 flex items-center gap-2">
+              <span class="text-3xl">⚠️</span> The Core Challenges
+            </h2>
+            <p class="text-slate-300 text-sm mb-6">Candidates face major bottlenecks when self-preparing for demanding
+              industry job interviews.</p>
+
+            <ul class="space-y-4">
+              <li class="flex gap-3">
+                <span class="text-brandIndigo font-bold text-lg">01</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">High Mock Anxiety</h4>
+                  <p class="text-slate-400 text-xs mt-0.5">Candidates struggle with extreme nervousness during live
+                    panels due to lack of exposure to mock setups.</p>
+                </div>
+              </li>
+              <li class="flex gap-3">
+                <span class="text-brandIndigo font-bold text-lg">02</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Generic Study Resources</h4>
+                  <p class="text-slate-400 text-xs mt-0.5">Static cheat sheets fail to offer adaptive questions aligned
+                    to specific candidate profiles and experience.</p>
+                </div>
+              </li>
+              <li class="flex gap-3">
+                <span class="text-brandIndigo font-bold text-lg">03</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Lack of Granular Feedback</h4>
+                  <p class="text-slate-400 text-xs mt-0.5">Practicing without scores makes it impossible to locate
+                    technical gaps or structure formatting problems.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="border-t border-brandBorder/40 pt-4 mt-6 text-xs text-slate-400">
+            * Standard prep platforms rank candidates without pinpointing syllabus concepts needing practice.
+          </div>
+        </div>
+
+        <!-- Right: The Cost / Impact Card -->
+        <div class="glass-card rounded-2xl p-8 border border-brandTeal/30 glow-teal flex flex-col justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-brandTeal mb-4 flex items-center gap-2">
+              <span class="text-3xl">📉</span> The Impact on Seekers
+            </h2>
+            <p class="text-slate-300 text-sm mb-6">Preparation gaps directly lead to lost offers, extended job searches,
+              and high financial tolls.</p>
+
+            <ul class="space-y-4">
+              <li class="flex gap-3">
+                <span class="text-brandTeal font-bold text-lg">A</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Missed Professional Openings</h4>
+                  <p class="text-slate-400 text-xs mt-0.5">Failing initial phone/technical interviews not from lack of
+                    intelligence, but due to poor answer structuring.</p>
+                </div>
+              </li>
+              <li class="flex gap-3">
+                <span class="text-brandTeal font-bold text-lg">B</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Wasted Preparation Cycles</h4>
+                  <p class="text-slate-400 text-xs mt-0.5">Spending weeks reading irrelevant textbooks instead of
+                    targeting high-yield, role-specific question formats.</p>
+                </div>
+              </li>
+              <li class="flex gap-3">
+                <span class="text-brandTeal font-bold text-lg">C</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Delayed Feedback Loops</h4>
+                  <p class="text-slate-400 text-xs mt-0.5">Traditional bootcamps charge high fees and take days to grade
+                    a single written or spoken test.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="border-t border-brandBorder/40 pt-4 mt-6 text-xs text-slate-400">
+            * GenAI provides an affordable, instant, and personalized mock platform for job seekers.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 3: The Solution -->
+    <section class="slide flex items-center justify-center" data-section="Our Solution">
+      <div class="max-w-6xl w-full">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center">
+          MockAI: The Intelligent Solution
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Card 1 -->
+          <div class="glass-card rounded-xl p-6 border-t-4 border-brandIndigo flex flex-col justify-between h-[360px]">
+            <div>
+              <div
+                class="w-12 h-12 bg-brandIndigo/10 text-brandIndigo rounded-lg flex items-center justify-center text-2xl font-bold mb-4">
+                🖥️</div>
+              <h3 class="text-lg font-bold text-white mb-2">Interactive Simulations</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                Adaptive text interface that mimics real-world technical and behavioral mock sessions. Restructure
+                inputs into interactive choice cards for MCQs, inputs for FIBs, and expandable boxes for essays.
+              </p>
+            </div>
+            <div class="text-[11px] text-brandIndigo font-semibold">6 ROLES • 3 STYLES • 3 DIFFICULTIES</div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card rounded-xl p-6 border-t-4 border-brandTeal flex flex-col justify-between h-[360px]">
+            <div>
+              <div
+                class="w-12 h-12 bg-brandTeal/10 text-brandTeal rounded-lg flex items-center justify-center text-2xl font-bold mb-4">
+                🤖</div>
+              <h3 class="text-lg font-bold text-white mb-2">Real-time GenAI Grading</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                Google Gemini API evaluates responses instantly. Scoring details map technical correctness,
+                communication clarity, and answer relevance. Built-in local fallbacks ensure grading continues offline.
+              </p>
+            </div>
+            <div class="text-[11px] text-brandTeal font-semibold">STRUCTURED JSON SCHEMAS • 0s WAITING</div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-card rounded-xl p-6 border-t-4 border-brandPurple flex flex-col justify-between h-[360px]">
+            <div>
+              <div
+                class="w-12 h-12 bg-brandPurple/10 text-brandPurple rounded-lg flex items-center justify-center text-2xl font-bold mb-4">
+                🗺️</div>
+              <h3 class="text-lg font-bold text-white mb-2">Weakness Maps & Plans</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                Extracts weak conceptual areas (e.g. SQL Joins, REST APIs) directly from incorrect answers and
+                auto-generates a personalized study roadmap checklist to resolve skill gaps.
+              </p>
+            </div>
+            <div class="text-[11px] text-brandPurple font-semibold">DYNAMIC CHECKLISTS • TIMELINE TIMINGS</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Architecture -->
+    <section class="slide flex items-center justify-center" data-section="System Architecture">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+        <!-- Left: Core Info -->
+        <div class="space-y-6">
+          <h2 class="text-3xl font-bold text-white leading-tight">
+            Full-Stack System Architecture
+          </h2>
+          <p class="text-slate-300 text-sm">
+            MockAI is designed as an asynchronous, container-ready decoupled architecture built with high-performance
+            frameworks.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="p-2 bg-brandTeal/10 text-brandTeal rounded">💻</div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">React Frontend (Vite + TypeScript)</h4>
+                <p class="text-slate-400 text-xs mt-0.5">High-speed React 19 SPA styled with TailwindCSS v4. Implements
+                  global context layers, dynamic wizard steps, SVG circular graphs, and responsive inputs.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="p-2 bg-brandIndigo/10 text-brandIndigo rounded">⚙️</div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">FastAPI Backend (Python 3.13)</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Highly concurrent REST API backend. Implements Bcrypt hashing,
+                  secure JWT authorization dependencies, and structured routers.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="p-2 bg-brandPurple/10 text-brandPurple rounded">🗄️</div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">MongoDB Database & Gemini LLM</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Local MongoDB client handling index optimizations, coupled with
+                  the Gemini-1.5-Flash model mapping responses to structured schemas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Flow Diagram -->
+        <div
+          class="glass-card rounded-2xl p-6 border border-brandBorder/40 flex flex-col items-center justify-center relative overflow-hidden bg-brandDark/40">
+
+          <!-- Frontend Box -->
+          <div class="w-64 py-2.5 px-4 bg-brandCard border border-brandTeal text-center rounded-lg shadow-md z-10">
+            <h4 class="font-bold text-xs text-brandTeal">REACT FRONTEND SPA</h4>
+            <span class="text-[10px] text-slate-400">Vite + Tailwind v4 (Port 5173)</span>
+          </div>
+
+          <!-- Down Arrow 1 -->
+          <div class="my-3 text-brandIndigo text-lg animate-bounce">↓</div>
+
+          <!-- REST API Box -->
+          <div class="w-72 py-3 px-4 bg-brandCard border border-brandIndigo text-center rounded-lg shadow-md z-10">
+            <h4 class="font-bold text-xs text-brandIndigo">FASTAPI ROUTER LAYER</h4>
+            <span class="text-[10px] text-slate-400">Authentication / Session Manager (Port 8000)</span>
+          </div>
+
+          <!-- Down Arrow 2 -->
+          <div class="my-3 text-brandIndigo text-lg">↓</div>
+
+          <!-- Subsystems Flex Grid -->
+          <div class="grid grid-cols-3 gap-2 w-full">
+            <div class="p-2 bg-brandCard/90 border border-brandBorder rounded text-center">
+              <h5 class="font-bold text-[10px] text-white">JWT / Crypt</h5>
+              <span class="text-[8px] text-slate-400 block mt-1">Bcrypt / Access Token</span>
+            </div>
+            <div class="p-2 bg-brandCard/90 border border-brandBorder rounded text-center">
+              <h5 class="font-bold text-[10px] text-white">MongoDB</h5>
+              <span class="text-[8px] text-slate-400 block mt-1">S seeded docs / Profiles</span>
+            </div>
+            <div class="p-2 bg-brandCard/90 border border-brandBorder rounded text-center">
+              <h5 class="font-bold text-[10px] text-white">Gemini API</h5>
+              <span class="text-[8px] text-slate-400 block mt-1">Structured JSON / Plans</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Question Seeding -->
+    <section class="slide flex items-center justify-center" data-section="Data Configuration">
+      <div class="max-w-5xl w-full glass-card rounded-2xl p-8 border border-brandIndigo/30 glow-indigo">
+        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+          <span class="text-brandTeal">📦</span> Seeded Question Database (questions_bank)
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div class="md:col-span-7 space-y-4">
+            <p class="text-slate-300 text-sm">
+              Instead of requesting new live topics on every single query (which degrades performance), MockAI
+              incorporates a pre-configured database seeding framework.
+            </p>
+            <ul class="space-y-3 text-slate-300 text-xs">
+              <li class="flex items-start gap-2">
+                <span class="text-brandTeal font-bold">✔</span>
+                <span><strong>540 Seeded Questions:</strong> Fully structured questions database containing specific
+                  items for 6 core developer positions (Frontend, Backend, Fullstack, DevOps, Data Engineer, Mobile
+                  Developer).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brandTeal font-bold">✔</span>
+                <span><strong>3 Difficulty Levels:</strong> Categorized into Easy, Medium, and Hard
+                  configurations.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brandTeal font-bold">✔</span>
+                <span><strong>3 Interview Styles:</strong> Seeding tracks distinct domains (Technical, HR,
+                  Behavioral).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brandTeal font-bold">✔</span>
+                <span><strong>Rich Question Models:</strong> Supports descriptive text boxes, Multiple Choice Questions
+                  (MCQs) containing array choices, and Fill-in-the-Blank (FIB) keyword schemas.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="md:col-span-5 bg-brandDark/50 border border-brandBorder/50 rounded-xl p-4 flex flex-col justify-center">
+            <h4 class="text-xs font-bold text-brandIndigo tracking-wider uppercase mb-3">Database Matrix Math</h4>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="bg-brandCard p-2.5 rounded border border-brandBorder/40">
+                <div class="text-lg font-bold text-white">6</div>
+                <div class="text-[9px] text-slate-400 uppercase font-semibold">Roles</div>
+              </div>
+              <div class="bg-brandCard p-2.5 rounded border border-brandBorder/40">
+                <div class="text-lg font-bold text-white">3</div>
+                <div class="text-[9px] text-slate-400 uppercase font-semibold">Difficulties</div>
+              </div>
+              <div class="bg-brandCard p-2.5 rounded border border-brandBorder/40">
+                <div class="text-lg font-bold text-white">3</div>
+                <div class="text-[9px] text-slate-400 uppercase font-semibold">Types</div>
+              </div>
+            </div>
+            <div class="mt-3 p-3 bg-brandIndigo/10 border border-brandIndigo/20 rounded text-center">
+              <div class="text-xl font-extrabold text-white">540</div>
+              <div class="text-[9px] text-brandTeal font-bold tracking-wider uppercase">Seeded Documents</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: AI Grading Engine -->
+    <section class="slide flex items-center justify-center" data-section="Evaluation Engine">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+        <!-- Left 7 columns: Core Info -->
+        <div class="lg:col-span-7 space-y-6">
+          <h2 class="text-3xl font-bold text-white leading-tight">
+            Dynamic Generative AI Evaluation Engine
+          </h2>
+          <p class="text-slate-300 text-sm">
+            MockAI leverages Google Gemini's API to construct high-precision JSON scorecards. The scoring framework runs
+            structured prompt schemas configured to return detailed analytics.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 bg-brandCard/60 border-l-2 border-brandIndigo rounded">
+              <h5 class="font-bold text-brandIndigo text-xs uppercase">Correctness</h5>
+              <p class="text-slate-400 text-[10px] mt-1">Measures factual precision, technical terms, and correct logic.
+              </p>
+            </div>
+            <div class="p-4 bg-brandCard/60 border-l-2 border-brandTeal rounded">
+              <h5 class="font-bold text-brandTeal text-xs uppercase">Clarity</h5>
+              <p class="text-slate-400 text-[10px] mt-1">Measures grammar, structuring, readability, and sentence flow.
+              </p>
+            </div>
+            <div class="p-4 bg-brandCard/60 border-l-2 border-brandPurple rounded">
+              <h5 class="font-bold text-brandPurple text-xs uppercase">Relevance</h5>
+              <p class="text-slate-400 text-[10px] mt-1">Measures how accurately the reply answers specific constraints.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-brandIndigo/5 border border-brandIndigo/20 rounded-lg p-3 text-xs text-slate-300">
+            <strong>🚀 Hybrid Fallback Engine:</strong> Incorporates a local scoring module that performs offline
+            evaluations when the API key is not configured by matching keywords (FIB), validating option keys (MCQs),
+            and analyzing word lengths (Descriptive).
+          </div>
+        </div>
+
+        <!-- Right 5 columns: Schema code block -->
+        <div class="lg:col-span-5 glass-card rounded-xl p-5 border border-brandBorder/60 bg-brandDark/40">
+          <div class="flex items-center justify-between pb-3 border-b border-brandBorder/40 mb-3">
+            <span class="text-xs font-bold text-slate-400 font-mono">Pydantic Schema (JSON Structured Mode)</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-brandTeal"></span>
+          </div>
+          <pre class="text-[10px] font-mono text-slate-300 overflow-x-auto leading-relaxed custom-scroll">
+<span class="text-blue-400">class</span> <span class="text-emerald-400">AnswerEvaluation</span>(BaseModel):
+    score_correctness: <span class="text-purple-400">int</span>  <span class="text-slate-500"># 0 to 100</span>
+    score_clarity: <span class="text-purple-400">int</span>      <span class="text-slate-500"># 0 to 100</span>
+    score_relevance: <span class="text-purple-400">int</span>    <span class="text-slate-500"># 0 to 100</span>
+    overall_score: <span class="text-purple-400">int</span>      <span class="text-slate-500"># Calculated Average</span>
+    feedback: <span class="text-purple-400">str</span>           <span class="text-slate-500"># Detailed feedback</span>
+    weak_topics: <span class="text-purple-400">List[str]</span>  <span class="text-slate-500"># e.g. ["REST APIs"]</span>
+    model_answer: <span class="text-purple-400">str</span>       <span class="text-slate-500"># Target ideal answer</span></pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Live Interview Room Features -->
+    <section class="slide flex items-center justify-center" data-section="Frontend UI">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+        <!-- Left: Image UI Mock Placeholder or features -->
+        <div
+          class="glass-card rounded-2xl p-6 border border-brandBorder/50 relative overflow-hidden bg-brandDark/60 flex flex-col justify-between h-[380px]">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-brandBorder/40 mb-4">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+              </div>
+              <span class="text-xs font-semibold text-brandTeal uppercase tracking-wider">LIVE INTERVIEW SESSION</span>
+            </div>
+
+            <div class="space-y-4">
+              <!-- Live Question text placeholder -->
+              <div class="bg-brandCard/80 p-3.5 rounded-lg border border-brandBorder/40">
+                <div class="text-[10px] text-brandTeal font-bold uppercase mb-1">Question 4 of 10 • Technical Hard</div>
+                <div class="text-xs text-white font-medium">Explain the difference between optimistic concurrency
+                  control and pessimistic locking in MongoDB.</div>
+              </div>
+              <!-- Multiple Choices display -->
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div
+                  class="p-2.5 bg-brandCard rounded border border-brandIndigo/30 text-slate-300 hover:bg-brandIndigo/10 cursor-pointer transition">
+                  A. Optimistic locks collections</div>
+                <div
+                  class="p-2.5 bg-brandCard rounded border border-brandBorder/40 text-slate-300 hover:bg-brandIndigo/10 cursor-pointer transition">
+                  B. Pessimistic locks documents</div>
+                <div
+                  class="p-2.5 bg-brandCard rounded border border-brandBorder/40 text-slate-300 hover:bg-brandIndigo/10 cursor-pointer transition">
+                  C. Optimistic relies on versions</div>
+                <div
+                  class="p-2.5 bg-brandCard rounded border border-brandBorder/40 text-slate-300 hover:bg-brandIndigo/10 cursor-pointer transition">
+                  D. None of the above</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between items-center text-[10px] text-slate-400 mt-4 border-t border-brandBorder/30 pt-3">
+            <span>Word count recommendation: min 30 words</span>
+            <span class="font-bold text-brandIndigo">PROGRESS: 40%</span>
+          </div>
+        </div>
+
+        <!-- Right: Core Features list -->
+        <div class="space-y-6">
+          <h2 class="text-3xl font-bold text-white leading-tight">
+            Premium Live Interview Room Experience
+          </h2>
+          <p class="text-slate-300 text-sm">
+            The frontend adapts UI elements to fit the specific question type retrieved from the question database.
+          </p>
+
+          <ul class="space-y-3.5 text-slate-300 text-xs">
+            <li class="flex items-start gap-2">
+              <span class="text-brandIndigo font-extrabold">✔</span>
+              <span><strong>Tailored Inputs:</strong> Replaces the descriptive textarea box with 4 selectable choice
+                cards during MCQs, and uses compact inputs for Fill-in-the-Blank questions.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-brandIndigo font-extrabold">✔</span>
+              <span><strong>Interactive Word Suggestion:</strong> Prompts the user with word targets based on difficulty
+                (e.g. min 25 words for Easy, min 50 for Hard descriptive questions).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-brandIndigo font-extrabold">✔</span>
+              <span><strong>State Resumption:</strong> Saves each submission in real-time, allowing users to safely
+                pause sessions and resume from the dashboard timeline.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-brandIndigo font-extrabold">✔</span>
+              <span><strong>Skeleton Loaders:</strong> Renders modern loading states to prevent page freezes during
+                backend GenAI evaluation loops.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Detailed Performance Reports -->
+    <section class="slide flex items-center justify-center" data-section="Analytics Dashboard">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+        <!-- Left: Core Info -->
+        <div class="lg:col-span-7 space-y-6">
+          <h2 class="text-3xl font-bold text-white leading-tight">
+            Analytics Scorecards & Customized Roadmaps
+          </h2>
+          <p class="text-slate-300 text-sm">
+            Once a session compiles, candidates receive a comprehensive performance scorecard breakdown.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex gap-3">
+              <div class="p-1.5 bg-brandIndigo/10 text-brandIndigo rounded-lg font-bold text-xs mt-0.5">1</div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Circular SVG Score Gauges</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Renders interactive percentage dials tracking correctness,
+                  clarity, and relevance scores.</p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="p-1.5 bg-brandTeal/10 text-brandTeal rounded-lg font-bold text-xs mt-0.5">2</div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Weak Syllabus Flagging</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Highlights specific skill sectors (e.g. HTTP Statuses, Redux
+                  Actions) flagged during the mock.</p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="p-1.5 bg-brandPurple/10 text-brandPurple rounded-lg font-bold text-xs mt-0.5">3</div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Tailored Improvement Roadmaps</h4>
+                <p class="text-slate-400 text-xs mt-0.5">Creates a personalized, checkable roadmap list tailored to
+                  performance scores.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Dashboard UI mockup -->
+        <div
+          class="lg:col-span-5 glass-card rounded-2xl p-6 border border-brandBorder/50 bg-brandDark/60 flex flex-col justify-between h-[380px]">
+          <div>
+            <div class="pb-3 border-b border-brandBorder/40 mb-4 flex justify-between items-center">
+              <span class="text-xs font-bold text-white">MOCK RESULTS SCORECARD</span>
+              <span
+                class="px-2 py-0.5 bg-green-500/10 text-green-400 border border-green-500/20 text-[9px] rounded font-bold uppercase">COMPLETED</span>
+            </div>
+
+            <div class="space-y-4">
+              <!-- SVG dials preview -->
+              <div
+                class="flex justify-around items-center py-2 bg-brandCard/40 rounded-xl border border-brandBorder/30">
+                <div class="text-center">
+                  <div class="text-xl font-extrabold text-brandTeal">84%</div>
+                  <div class="text-[8px] text-slate-400 font-semibold uppercase">Correctness</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-xl font-extrabold text-brandIndigo">76%</div>
+                  <div class="text-[8px] text-slate-400 font-semibold uppercase">Clarity</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-xl font-extrabold text-brandPurple">90%</div>
+                  <div class="text-[8px] text-slate-400 font-semibold uppercase">Relevance</div>
+                </div>
+              </div>
+
+              <!-- Roadmaps checklist checklist -->
+              <div class="space-y-1.5">
+                <h4 class="text-[10px] text-brandTeal font-bold uppercase tracking-wider">Generated Study Actions</h4>
+                <div
+                  class="flex items-center gap-2 p-2 bg-brandCard rounded text-xs border border-brandBorder/20 text-slate-300">
+                  <input type="checkbox" checked disabled class="accent-brandTeal">
+                  <span>Review SQL indexing and execution planning</span>
+                </div>
+                <div
+                  class="flex items-center gap-2 p-2 bg-brandCard rounded text-xs border border-brandBorder/20 text-slate-300">
+                  <input type="checkbox" disabled class="accent-brandTeal">
+                  <span>Re-examine JWT payload signing parameters</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-slate-400 border-t border-brandBorder/30 pt-3 flex justify-between">
+            <span>Overall Session Score: <strong>83/100</strong></span>
+            <span class="text-brandTeal font-bold">Passed</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Endpoint Architecture -->
+    <section class="slide flex items-center justify-center" data-section="Backend API">
+      <div
+        class="max-w-5xl w-full glass-card rounded-2xl p-8 border border-brandBorder/50 bg-brandDark/80 relative overflow-hidden">
+        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+          <span class="text-brandIndigo">🔌</span> Unified API Schema
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-mono">
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-bold text-brandIndigo text-sm uppercase mb-2 font-sans">1. Security & Authentication</h3>
+              <div class="space-y-1.5">
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-emerald-400">POST</span>
+                  <span class="text-slate-300">/api/auth/register</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-emerald-400">POST</span>
+                  <span class="text-slate-300">/api/auth/login</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-blue-400">GET</span>
+                  <span class="text-slate-300">/api/auth/me</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-brandIndigo text-sm uppercase mb-2 font-sans">2. Profile settings Manager</h3>
+              <div class="space-y-1.5">
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-blue-400">GET</span>
+                  <span class="text-slate-300">/api/profile</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-yellow-400">PUT</span>
+                  <span class="text-slate-300">/api/profile</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-bold text-brandTeal text-sm uppercase mb-2 font-sans">3. Mock lifecycle Engine</h3>
+              <div class="space-y-1.5">
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-emerald-400">POST</span>
+                  <span class="text-slate-300">/api/interview/start</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-blue-400">GET</span>
+                  <span class="text-slate-300">/api/interview/question/{id}</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-emerald-400">POST</span>
+                  <span class="text-slate-300">/api/interview/answer/{id}</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-emerald-400">POST</span>
+                  <span class="text-slate-300">/api/interview/complete/{id}</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-brandTeal text-sm uppercase mb-2 font-sans">4. Analytics Logs</h3>
+              <div class="space-y-1.5">
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-blue-400">GET</span>
+                  <span class="text-slate-300">/api/history</span>
+                </div>
+                <div class="p-2 bg-brandCard/60 border border-brandBorder/40 rounded flex justify-between">
+                  <span class="text-blue-400">GET</span>
+                  <span class="text-slate-300">/api/results/{id}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Future Roadmap & Conclusions -->
+    <section class="slide flex items-center justify-center" data-section="Future Roadmap">
+      <div class="max-w-6xl w-full">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center">
+          The Next Frontier: Future Roadmaps
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="glass-card rounded-xl p-5 border border-brandBorder/50 flex flex-col justify-between h-[300px]">
+            <div>
+              <div class="text-3xl mb-3">🎙️</div>
+              <h3 class="font-bold text-white text-base mb-2">Voice-to-Text</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">Incorporate Web Speech API tools to allow candidates to
+                speak answers, parsing spoken transcripts for grammar, tone, and pacing.</p>
+            </div>
+            <div class="text-[10px] text-brandTeal font-bold uppercase">PHASE 2</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-5 border border-brandBorder/50 flex flex-col justify-between h-[300px]">
+            <div>
+              <div class="text-3xl mb-3">📂</div>
+              <h3 class="font-bold text-white text-base mb-2">Resume Parser</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">Construct automated PDF parser handlers. Extract skills
+                and experience data using LLMs to customize mock parameter wizard pages.</p>
+            </div>
+            <div class="text-[10px] text-brandIndigo font-bold uppercase">PHASE 2</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-5 border border-brandBorder/50 flex flex-col justify-between h-[300px]">
+            <div>
+              <div class="text-3xl mb-3">📹</div>
+              <h3 class="font-bold text-white text-base mb-2">Video Analytics</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">Integrate computer vision analysis to analyze facial
+                focus, head angles, and expressions, providing non-verbal dashboards.</p>
+            </div>
+            <div class="text-[10px] text-brandPurple font-bold uppercase">PHASE 3</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-5 border border-brandBorder/50 flex flex-col justify-between h-[300px]">
+            <div>
+              <div class="text-3xl mb-3">👥</div>
+              <h3 class="font-bold text-white text-base mb-2">Collaborative Panels</h3>
+              <p class="text-slate-400 text-xs leading-relaxed">Enable collaborative peer workspace mocks using
+                WebSockets, supporting recruiter dashboards for universities and companies.</p>
+            </div>
+            <div class="text-[10px] text-brandIndigo font-bold uppercase">PHASE 3</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Interactive Toolbar -->
+  <footer
+    class="w-full flex items-center justify-between px-8 py-4 border-t border-brandBorder/40 bg-brandDark/80 backdrop-blur-md z-50">
+    <div class="text-xs text-slate-400 font-medium">
+      Tip: Use <kbd
+        class="px-1.5 py-0.5 bg-brandCard rounded border border-brandBorder/60 text-slate-300 font-mono">Left</kbd>/<kbd
+        class="px-1.5 py-0.5 bg-brandCard rounded border border-brandBorder/60 text-slate-300 font-mono">Right</kbd>
+      keys or <kbd
+        class="px-1.5 py-0.5 bg-brandCard rounded border border-brandBorder/60 text-slate-300 font-mono">Space</kbd> to
+      change slides.
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex items-center gap-4">
+      <button id="prev-btn"
+        class="w-10 h-10 rounded-lg bg-brandCard border border-brandBorder hover:bg-brandBorder/40 text-slate-300 flex items-center justify-center font-bold transition shadow-sm disabled:opacity-30 disabled:pointer-events-none">
+        ←
+      </button>
+      <button id="next-btn"
+        class="w-20 h-10 rounded-lg bg-gradient-to-r from-brandIndigo to-brandTeal text-white font-bold transition shadow-md flex items-center justify-center gap-1 hover:brightness-110">
+        Next <span>→</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Simple JavaScript slide deck script controller -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const slideNum = document.getElementById('slide-num');
+    const slideTotal = document.getElementById('slide-total');
+    const sectionName = document.getElementById('section-name');
+
+    let currentSlide = 0;
+    slideTotal.textContent = slides.length;
+
+    function updateSlides() {
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active', 'prev');
+        if (index === currentSlide) {
+          slide.classList.add('active');
+          sectionName.textContent = slide.getAttribute('data-section');
+        } else if (index < currentSlide) {
+          slide.classList.add('prev');
+        }
+      });
+
+      slideNum.textContent = currentSlide + 1;
+
+      // Disable/enable prev button
+      prevBtn.disabled = currentSlide === 0;
+
+      // Change next button label at last slide
+      if (currentSlide === slides.length - 1) {
+        nextBtn.innerHTML = 'Finish 🎉';
+      } else {
+        nextBtn.innerHTML = 'Next <span>→</span>';
+      }
+    }
+
+    function goToNextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlides();
+      } else {
+        // Reset to first slide at the end
+        currentSlide = 0;
+        updateSlides();
+      }
+    }
+
+    function goToPrevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlides();
+      }
+    }
+
+    // Click events
+    nextBtn.addEventListener('click', goToNextSlide);
+    prevBtn.addEventListener('click', goToPrevSlide);
+
+    // Keyboard events
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        goToNextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+        e.preventDefault();
+        goToPrevSlide();
+      }
+    });
+
+    // Touch support (simple horizontal swipe)
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+
+    function handleGesture() {
+      if (touchendX < touchstartX - 50) {
+        goToNextSlide();
+      }
+      if (touchendX > touchstartX + 50) {
+        goToPrevSlide();
+      }
+    }
+
+    // Run initial display update
+    updateSlides();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+# Ignore secret keys and environment variables
+.env
+backend/.env
+backend/.env.local
+
+# Ignore Python virtual environments and cache
+backend/.venv/
+backend/venv/
+__pycache__/
+*.pyc
+
+# Ignore heavy frontend packages and builds
+frontend/node_modules/
+frontend/dist/
